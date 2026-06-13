@@ -1,0 +1,17 @@
+# WM and display server USE flags
+
+# i3 / X11 stack
+x11-base/xorg-server xvfb glamor udev
+x11-misc/i3 -doc
+x11-terms/alacritty -wayland
+
+# Sway / Wayland stack
+gui-wm/sway -X tray
+gui-apps/waybar experimental tray pipewire pulseaudio
+x11-terms/alacritty wayland
+
+# Audio
+media-video/pipewire alsa bluetooth jack
+
+# Openbox
+x11-wm/openbox imlib xml

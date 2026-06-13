@@ -1,0 +1,22 @@
+# Logs
+/var/log/turbogentoo/
+*.log
+
+# Local config overrides (never commit passwords or machine-specific paths)
+turbogentoo.conf
+*.local.conf
+
+# Temp & cache
+*.tmp
+*.swp
+*~
+.DS_Store
+
+# Downloaded stage3 tarballs
+*.tar.xz
+*.tar.bz2
+*.tar.gz
+*.sha256
+
+# Generated partition map (machine-specific)
+turbogentoo-partmap.env

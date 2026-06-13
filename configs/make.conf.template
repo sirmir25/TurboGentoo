@@ -1,0 +1,51 @@
+# TurboGentoo — optimised make.conf template
+# Variables in {{BRACES}} are substituted by 02-base-config.sh
+
+CFLAGS="{{CFLAGS}}"
+CXXFLAGS="${CFLAGS}"
+FCFLAGS="${CFLAGS}"
+FFLAGS="${CFLAGS}"
+
+# Use all cores + 1 for jobs, cap load at core count
+MAKEOPTS="-j{{JOBS}} -l{{CORES}}"
+
+# Run multiple emerge jobs in parallel; skip interactive confirmations
+EMERGE_DEFAULT_OPTS="--jobs={{CORES}} --load-average={{CORES}} --ask=n --quiet-build"
+
+# ── USE flags ────────────────────────────────────────────────────────────────
+# Core desktop flags — tune to your hardware and WM choice
+USE="{{USE_FLAGS}}"
+
+# ── Binary packages ───────────────────────────────────────────────────────────
+# Uncomment to pull pre-built packages (significantly faster installs)
+# FEATURES="${FEATURES} getbinpkg binpkg-request-signature"
+# PORTAGE_BINHOST="https://binpkgs.gentoo.org/packages/default/linux/amd64/17.1/"
+
+# ── Licences ──────────────────────────────────────────────────────────────────
+ACCEPT_LICENSE="-* @FREE @BINARY-REDISTRIBUTABLE"
+
+# ── Architecture ──────────────────────────────────────────────────────────────
+ACCEPT_KEYWORDS="amd64"
+
+# ── Localisation ─────────────────────────────────────────────────────────────
+L10N="en"
+LINGUAS="en"
+
+# ── Input & video ─────────────────────────────────────────────────────────────
+INPUT_DEVICES="libinput"
+# Adjust to your GPU:
+#   AMD   → "amdgpu radeonsi"
+#   NVIDIA → "nvidia"
+#   Intel  → "intel i965"
+#   VM    → "vmware" or "vesa"
+VIDEO_CARDS="amdgpu radeonsi"
+
+# ── Mirror ────────────────────────────────────────────────────────────────────
+GENTOO_MIRRORS="{{MIRROR}}"
+
+# ── GRUB platform ─────────────────────────────────────────────────────────────
+GRUB_PLATFORMS="efi-64"
+
+# ── Portage temp dir ──────────────────────────────────────────────────────────
+# Uncomment to build in RAM (fast but needs ≥2G free RAM per job)
+# PORTAGE_TMPDIR="/tmp"

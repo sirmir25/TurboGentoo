@@ -1,0 +1,16 @@
+# Accept testing (~amd64) for packages that need newer versions
+
+# Waybar often needs testing branch for latest features
+gui-apps/waybar ~amd64
+
+# Alacritty moves fast
+x11-terms/alacritty ~amd64
+
+# Sway ecosystem
+gui-wm/sway ~amd64
+gui-apps/swaylock ~amd64
+gui-apps/swayidle ~amd64
+gui-apps/wofi ~amd64
+gui-apps/mako ~amd64
+gui-apps/grim ~amd64
+gui-apps/slurp ~amd64

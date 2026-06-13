@@ -1,0 +1,19 @@
+#!/bin/sh
+# Openbox autostart — TurboGentoo
+
+# Wallpaper
+feh --bg-scale ~/.config/openbox/wallpaper.jpg 2>/dev/null &
+
+# Compositor (transparency, shadows)
+picom --daemon &
+
+# Notification daemon
+dunst &
+
+# Panel
+tint2 &
+
+# PulseAudio / PipeWire
+pipewire &
+pipewire-pulse &
+wireplumber &
