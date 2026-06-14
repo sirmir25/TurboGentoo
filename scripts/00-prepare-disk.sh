@@ -13,6 +13,7 @@ TG_DISK="${TG_DISK:-/dev/sda}"
 TG_BOOT_MODE="${TG_BOOT_MODE:-uefi}"   # uefi | bios
 TG_EFI_SIZE="${TG_EFI_SIZE:-512M}"
 TG_SWAP_SIZE="${TG_SWAP_SIZE:-4G}"     # 0 = no swap
+TG_AUTO="${TG_AUTO:-0}"               # 1 = skip confirmation prompt (for automated installs)
 TG_MOUNTROOT="${TG_MOUNTROOT:-/mnt/gentoo}"
 TG_FS_ROOT="${TG_FS_ROOT:-ext4}"       # ext4 | btrfs | xfs
 DRY_RUN="${DRY_RUN:-0}"
@@ -404,6 +405,8 @@ main() {
 
     if [[ "${DRY_RUN}" == "1" ]]; then
         warn "DRY-RUN mode — no changes will be made"
+    elif [[ "${TG_AUTO}" == "1" ]]; then
+        warn "AUTO mode — skipping confirmation, proceeding with disk wipe"
     else
         confirm_destructive
     fi
