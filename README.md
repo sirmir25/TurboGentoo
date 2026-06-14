@@ -24,7 +24,48 @@
 
 ---
 
-## Быстрый старт
+## Быстрый старт — одна команда с любого дистрибутива
+
+Работает из **Debian, Ubuntu, Arch, Fedora, openSUSE, Alpine** и с Gentoo live CD.  
+Скрипт сам определит дистрибутив, установит зависимости и запустит установку.
+
+```bash
+# Запуск с параметрами по умолчанию (диск определяется автоматически)
+sudo bash <(curl -fsSL https://raw.githubusercontent.com/sirmir25/TurboGentoo/main/bootstrap.sh)
+
+# Указать диск, WM и профиль явно
+sudo bash <(curl -fsSL https://raw.githubusercontent.com/sirmir25/TurboGentoo/main/bootstrap.sh) \
+    --disk /dev/sda --wm i3 --profile desktop
+
+# Предпросмотр без изменений
+sudo bash <(curl -fsSL https://raw.githubusercontent.com/sirmir25/TurboGentoo/main/bootstrap.sh) \
+    --dry-run
+```
+
+Либо клонируй репо и запускай локально:
+
+```bash
+git clone https://github.com/sirmir25/TurboGentoo.git && cd TurboGentoo
+sudo bash bootstrap.sh --disk /dev/sda --wm i3 --profile desktop
+```
+
+### Поддерживаемые дистрибутивы для запуска
+
+| Дистрибутив | Пакетный менеджер | Статус |
+|---|---|---|
+| Debian / Ubuntu / Mint | apt | ✅ |
+| Arch / Manjaro / EndeavourOS | pacman | ✅ |
+| Fedora | dnf | ✅ |
+| CentOS / RHEL / AlmaLinux / Rocky | dnf | ✅ |
+| openSUSE | zypper | ✅ |
+| Alpine | apk | ✅ |
+| Gentoo live CD | portage/built-in | ✅ |
+
+> Устанавливается **Gentoo** на целевой диск, независимо от того, с какого дистрибутива запущен скрипт.
+
+---
+
+## Запуск по шагам (с Gentoo live CD)
 
 ```bash
 # 1. Загрузись с Gentoo minimal install CD
@@ -33,17 +74,13 @@
 net-setup eth0   # или: dhcpcd eth0
 
 # 3. Скачай TurboGentoo
-wget https://github.com/youruser/turbogentoo/archive/refs/heads/main.tar.gz
-tar xzf main.tar.gz && cd turbogentoo-main
+wget https://github.com/sirmir25/TurboGentoo/archive/refs/heads/main.tar.gz
+tar xzf main.tar.gz && cd TurboGentoo-main
 
-# 4. Отредактируй профиль под себя
-cp profiles/desktop.conf turbogentoo.conf
-nano turbogentoo.conf
+# 4. Запусти bootstrap (определит диск и настройки автоматически)
+sudo bash bootstrap.sh
 
-# 5. Запусти оркестратор
-bash install.sh --config turbogentoo.conf
-
-# 6. После перезагрузки — логин в WM
+# 5. После перезагрузки — логин в WM
 ```
 
 Либо запускай скрипты по одному вручную для полного контроля (см. ниже).
