@@ -190,11 +190,23 @@ compat_shims() {
 
     # Some distros ship wget but not curl, or vice versa
     if ! command -v curl &>/dev/null && command -v wget &>/dev/null; then
-        # Provide a curl-compatible wrapper using wget
         cat > /usr/local/bin/curl <<'CURLWRAP'
 #!/bin/sh
-# wget shim for curl
-exec wget "$@"
+# curl shim using wget — translates the flags TurboGentoo actually uses
+_url=""
+_out="-O-"
+_flags="-q"
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -fsSL|-fsL|-sL|-fL|-s|-f) shift ;;
+        -o) _out="-O$2"; shift 2 ;;
+        -O) _out="-O$2"; shift 2 ;;
+        --output) _out="-O$2"; shift 2 ;;
+        http*|ftp*) _url="$1"; shift ;;
+        *) shift ;;
+    esac
+done
+exec wget ${_flags} ${_out} "${_url}"
 CURLWRAP
         chmod +x /usr/local/bin/curl
         ok "Created curl → wget shim"

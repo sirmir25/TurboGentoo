@@ -82,9 +82,8 @@ pkgs_openbox="
 pkgs_desktop_extra="
     www-client/firefox-bin
     app-misc/thunar
-    media-sound/pipewire
     media-video/pipewire
-    media-libs/pavucontrol-qt
+    media-sound/pavucontrol-qt
     media-gfx/imv
     app-text/zathura
     app-text/zathura-pdf-poppler

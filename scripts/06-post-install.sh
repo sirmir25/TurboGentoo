@@ -44,8 +44,14 @@ fi
 mount_pseudo
 
 # ── set root password ─────────────────────────────────────────────────────────
-log "Set root password for the new system:"
-chroot "${TG_MOUNTROOT}" /bin/bash -c "passwd root"
+log "Setting root password..."
+if [[ -n "${TG_ROOT_PASS:-}" ]]; then
+    echo "root:${TG_ROOT_PASS}" | chroot "${TG_MOUNTROOT}" /usr/sbin/chpasswd
+    ok "Root password set"
+else
+    log "TG_ROOT_PASS not set — prompting interactively"
+    chroot "${TG_MOUNTROOT}" /bin/bash -c "passwd root"
+fi
 
 # ── create user ───────────────────────────────────────────────────────────────
 log "Creating user '${TG_USERNAME}'..."
@@ -61,8 +67,14 @@ else
 fi
 CHROOT_EOF
 
-log "Set password for user '${TG_USERNAME}':"
-chroot "${TG_MOUNTROOT}" /bin/bash -c "passwd ${TG_USERNAME}"
+log "Setting password for '${TG_USERNAME}'..."
+if [[ -n "${TG_USER_PASS:-}" ]]; then
+    echo "${TG_USERNAME}:${TG_USER_PASS}" | chroot "${TG_MOUNTROOT}" /usr/sbin/chpasswd
+    ok "User password set"
+else
+    log "TG_USER_PASS not set — prompting interactively"
+    chroot "${TG_MOUNTROOT}" /bin/bash -c "passwd ${TG_USERNAME}"
+fi
 
 # ── sudo setup ────────────────────────────────────────────────────────────────
 chroot "${TG_MOUNTROOT}" /bin/bash -l <<'CHROOT_EOF'
